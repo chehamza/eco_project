@@ -1,0 +1,18 @@
+{% if showHeader %}
+    <header>
+        <div>
+            <a href="/"><img src="images/logo.png" id="logo" alt="logo"></a>
+        </div>
+        <li>
+            {% if session.user %}
+                {% if session.user.isAdmin %}
+                    <a href="/logout" id="logout-btn">Logout</a>
+                {% else %}
+                    <a href="/addCompany" id="addCompany-btn">Créer mon espace</a>
+                    <a href="/annuaire" id="Annuaire-btn">Annuaire</a>
+                    <a href="/logout" id="logout-btn">Logout</a>
+                {% endif %}
+            {% endif %}
+        </li>
+    </header>
+{% endif %}

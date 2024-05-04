@@ -1,0 +1,48 @@
+{% block main %}
+	<!DOCTYPE html>
+	<html lang="fr">
+		<head>
+			<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<title>Détails du matériau</title>
+			<link rel="stylesheet" href="styles.css">
+		</head>
+		<body>
+			<div class="container">
+				<h1>Détails du matériau</h1>
+				{% if material %}
+					<div class="card">
+						<h2 class="card-title">
+							<strong>Nom du matériau :</strong>
+							{{ material.name }}
+						</h2>
+						<div class="card-content">
+							<p>
+								<strong>Entreprise:</strong>
+								{{ material.company }}
+							</p>
+							<p>
+								<strong>Catégorie:</strong>
+								{{ material.category }}
+							</p>
+							<p>
+								<strong>Quantité:</strong>
+								{{ material.quantity }}
+							</p>
+							<p>
+								<strong>Prix:</strong>
+								{{ material.price }}
+							</p>
+							<p>
+								<strong>Description:</strong>
+								{{ material.description }}
+							</p>
+						</div>
+					</div>
+				{% else %}
+					<p>Aucune information disponible pour ce matériau.</p>
+				{% endif %}
+			</div>
+		</body>
+	</html>
+{% endblock %}

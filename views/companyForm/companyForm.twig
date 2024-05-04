@@ -1,0 +1,59 @@
+
+
+{% block main %}
+	<div class="addFormCtn">
+		<h2>Créer votre espace entreprise</h2>
+		<form {% if company %} action="/updateCompany/{{company.id}}" {% else %} action="/addCompany" {% endif %} method="POST">
+			<div>
+				<label for="name">Nom </label>
+				<input type="text" name="name" id="name" {% if company %} value="{{company.name}}" {% endif %} placeholder="Nom de l'entreprise" required>
+				<p class="error-message">{{errors.name.message}}</p>
+			</div>
+			<div>
+				<label for="siret">Siret</label>
+				<input type="text" name="siret" id="siret" {% if company %} value="{{company.siret}}" {% endif %} placeholder="Numéro SIRET" required>
+				<p class="error-message">{{errors.siret.message}}</p>
+			</div>
+			<div>
+				<label for="email">Email</label>
+				<input type="email" name="email" id="email" {% if company %} value="{{company.email}}" {% endif %} placeholder="Email de l'entreprise" required>
+				<p class="error-message">{{errors.email.message}}</p>
+			</div>
+			<div>
+				<div id="searchResults"></div>
+
+				<label for="address">Adresse</label>
+				<input type="text" name="address" list="autocomplete-list" id="address" {% if company %} value="{{company.address}}" {% endif %} placeholder="Adresse de l'entreprise" required>
+				<datalist id="autocomplete-list">
+					<option value="yahouuuu"></option>
+					<option value="yooohhhhooo"></option>
+				</datalist>
+				<p class="error-message">{{errors.address.message}}</p>
+			</div>
+			<div>
+				<label for="city">Ville</label>
+				<input type="text" name="city" id="city" {% if company %} value="{{company.city}}" {% endif %} placeholder="Ville de l'entreprise" required>
+				<p class="error-message">{{errors.city.message}}</p>
+			</div>
+			<div>
+				<label for="activities">Activité</label>
+				<input type="text" name="activity" id="activity" {% if company %} value="{{company.activity}}" {% endif %} placeholder="Activité de l'entreprise">
+				<p class="error-message">{{errors.activity.message}}</p>
+			</div>
+			<div>
+				<button type="submit">
+					{% if company %}
+						Modifier
+					{% else %}
+						Ajouter une entreprise
+					{% endif %}
+				</button>
+			</div>
+		</form>
+	</div>
+
+	<div id="map"></div>
+	{% block script %}
+		<script src="/js/autocomplete.js"></script>
+	{% endblock %}
+{% endblock %}

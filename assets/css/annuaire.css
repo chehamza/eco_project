@@ -1,0 +1,74 @@
+
+.annBody {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.annCtn {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.map {
+    height: 300px;
+}
+
+.mainCard {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+.cardTitle {
+    color: #007bff;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.cardContent p {
+    margin: 0 0 10px;
+}
+
+.cardContent ul {
+    list-style: none;
+    padding: 0;
+}
+
+.cardContent ul li {
+    margin-bottom: 5px;
+}
+
+.company-links {
+    text-align: center;
+}
+
+.company-links button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.company-links button a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.company-links button:hover {
+    background-color: #218838;
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<title></title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="/css/style.css" rel="stylesheet">
+		<link href="/css/homeForm.css" rel="stylesheet">
+		<link href="/css/header.css" rel="stylesheet">
+		<link href="/css/annuaire.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+		<script src="https://unpkg.com/leaflet/dist/leaflet-src.js"></script>
+
+		<!-- Load Esri Leaflet from CDN -->
+		<script src="https://unpkg.com/esri-leaflet"></script>
+		<script src="https://unpkg.com/esri-leaflet-geocoder@3.0.2/dist/esri-leaflet-geocoder.js"></script>
+
+
+		<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
+		<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+		<title>Gestionnaire des déchets</title>
+		{% block style %}{% endblock %}
+	</head>
+	<body>
+		{% block header %}
+			{% include "dashboard/dashboardHeader.twig" %}
+		{% endblock header %}
+
+		{% block main %}{% endblock %}
+		<script src="/js/script.js"></script>
+		{% block script %}{% endblock %}
+	</body>
+</html>

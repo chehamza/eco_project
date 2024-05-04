@@ -1,0 +1,18 @@
+{% extends "/index.html.twig" %}
+{% block main %}
+	{% if user.role == true %}	
+		<h1>Bievenue sur Eco-connect application</h1>
+	{% else %}
+		<main id="dashboard-ctn">
+			<h1>Bievenue sur Eco-connect application</h1>
+			
+			{% include "../companyView/companyView.twig" %}
+			 <div id="materialModal"   class = "materialsModal">
+				{% include "../materials/materialsForm.twig" %}
+			 </div>
+			
+		</main>
+
+	{% endif %}
+
+{% endblock %} 

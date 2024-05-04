@@ -1,0 +1,45 @@
+{% block main %}
+  <span class="remove">&times;</span>
+  
+    <div class="form-container" id ="form-container">
+        <h2>Ajouter un nouveau matériau</h2>
+        <form id="materialForm"  {% if material %} action="/updateMaterial/{{ material.id }}" {% else %} action="/addMaterial" {% endif %} method="POST">
+            <div id="nameContainer">
+                <label for="name">Nom du matériau</label>
+                <input type="text" name="name" id="name" {% if material %} value="{{ material.name }}" {% endif %} placeholder="Nom du matériau" >
+                <p class="error-message">{{ errors.name.message }}</p>
+            </div>
+            <div id="categoryContainer">
+                <label for="category">Catégorie</label>
+                <input type="text" name="category" id="category" {% if material %} value="{{ material.category }}" {% endif %} placeholder="Catégorie du matériau" >
+                <p class="error-message">{{ errors.category.message }}</p>
+            </div> 
+            <div id="qtyContainer">
+                <label for="quantity">Quantité</label>
+                <input type="number" name="quantity" id="quantity" {% if material %} value="{{ material.quantity }}" {% endif %} placeholder="Quantité du matériau" >
+                <p class="error-message">{{ errors.quantity.message }}</p>
+            </div>
+            <div id="priceContainer">
+                <label for="price">Prix</label>
+                <input type="number" name="price" id="price" {% if material %} value="{{ material.price }}" {% endif %} placeholder="Prix du matériau" 
+                <p class="error-message">{{ errors.price.message }}</p>
+            </div>
+             <div id="descriptionContainer">
+                <label for="description">Description</label>
+                <textarea name="description" id="description" placeholder="Description du matériau">{% if material %}{{ material.description }}{% endif %}</textarea>
+                <p class="error-message">{{ errors.description.message }}</p>
+            </div>
+            <div>
+                <button type="submit">
+                    {% if material %}
+                        Modifier
+                    {% else %}
+                        Ajouter un matériau
+                    {% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+  </div>
+    
+{% endblock %}

@@ -1,0 +1,143 @@
+{% extends "/index.html.twig" %}
+
+{% block main %}
+	<div class="annCtn">
+		<h1>Détails des entreprises</h1>
+	</div>
+	<div id="searchBar">
+		<form action="/annuaire" method="GET">
+			<input type="text" name="keyword" value="" placeholder="Search">
+			<select name="searchType">
+				<option value="activity">Secteur d'Activité</option>
+				<option value="materialsNeeded">Besoins</option>
+				<option value="wasteMaterials">Déchets</option>
+			</select>
+			<button type="submit">Search</button>
+		</form>
+	</div>
+
+
+	<ul>
+		{% for company in companies %}
+			{% if company %}
+				<div class="mainCard">
+					<h2 class="cardTitle">
+						<strong>Nom de l'entreprise :</strong>
+						{{ company.name }}
+					</h2>
+					<div class="cardContent">
+						<p>
+							<strong>Secteur d'activité:</strong>
+							{{ company.activity }}
+						</p>
+						<p>
+							<strong>Produits:</strong>
+							<ul>
+								{% for material in company.products %}
+									<li>Nom :{{ material.name }}</li>
+								{% endfor %}
+							</ul>
+							<strong>Besoins:</strong>
+							<ul>
+								{% for material in company.materialsNeeded %}
+									<li>Nom de produits recherché:
+										{{ material.name }}</li>
+								{% endfor %}
+							</ul>
+							<strong>Déchets:</strong>
+							<ul>
+								{% for material in company.wasteMaterials %}
+									<li>Nom:
+										{{ material.name }}</li>
+								{% endfor %}
+							</ul>
+						</p>
+						<a href="mailto:{{ company.email }}">
+							<img id="email-icon" src="/images/email-icon.png" alt="Email">
+						</a>
+
+					</div>
+					<div class="company-links">
+						<button>
+							<a href="/companyDetails/{{ company.id }}">Voir détails</a>
+						</button>
+						{% if session.user.isAdmin == true %}
+							<button>
+								<a href="/deleteCompany/{{ company.id }}">supprimer</a>
+							</button>
+						{% endif %}
+						{% if session.user.isAdmin == false %}
+							{% if company.id in session.user.evaluatedCompanies %}
+								<p>Cette entreprise a déjà été evaluée</p>
+							{% else %}
+								{% if company.id != session.user.company %}
+									<button>
+										<a id="openModalBtn" onclick='openReviewModal("{{ company.id }}")'>Ajouter un avis</a>
+									</button>
+								{% endif %}
+							{% endif %}
+						{% endif %}
+					</div>
+					<p>
+						<div class="star-rating" id="starRating">
+							<span class="star {% if company.average >= 5 %}active {% endif %}" data-value="5">&#9733;</span>
+							<span class="star {% if company.average >= 4 %}active {% endif %}" data-value="4">&#9733;</span>
+							<span class="star {% if company.average >= 3 %}active {% endif %}" data-value="3">&#9733;</span>
+							<span class="star {% if company.average >= 2 %}active {% endif %}" data-value="2">&#9733;</span>
+							<span class="star {% if company.average >= 1 %}active {% endif %}" data-value="1">&#9733;</span>
+						</div>
+					</p>
+					<p>Évaluation:
+						{{ company.average }}/5</p>
+					{% set numberOfEvaluations = company.evaluations|length %}
+					<p>basé sur :
+						{{ numberOfEvaluations }}
+						avis</p>
+					<div id="map{{loop.index0}}" data-address="{{company.address}}" class="map"></div>
+				</div>
+			{% else %}
+				<p>Aucune information disponible pour cette entreprise.</p>
+			{% endif %}
+
+
+		{% endfor %}
+	</ul>
+
+	<div id="ReviewModal" class="ReviewModal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<form class="review-ctn" id="reviewForm" action="/addReview/:companyId" method="post">
+				<label for="stars">Rating:</label>
+				<div class="star-rating" id="starRating">
+					<span class="star" data-value="5">&#9733;</span>
+					<span class="star" data-value="4">&#9733;</span>
+					<span class="star" data-value="3">&#9733;</span>
+					<span class="star" data-value="2">&#9733;</span>
+					<span class="star" data-value="1">&#9733;</span>
+				</div>
+				<input type="hidden" name="stars" id="stars" value="0">
+				<br>
+				{% if errors.message %}
+					<p class="error-message">{{ errors.message }}</p>
+				{% endif %}
+
+				<div id="map{{loop.index0}}" data-address="{{company.address}}" class="map"></div>
+
+				<label for="comment">Laisser un avis :</label>
+				<textarea name="comment" id="comment" cols="30" rows="5" placeholder="Décrivez votre expérience" required></textarea>
+				<br>
+				<label for="experienceDate">Date d'expérience :</label>
+				<input type="date" name="date" id="experienceDate" required title="Veuillez sélectionner une date">
+				<br>
+				{% if errors.message %}
+					<p class="error-message">{{ errors.message }}</p>
+				{% endif %}
+
+				<button type="submit">Ajouter</button>
+			</form>
+		</div>
+	</div>
+	{% block script %}
+		<script src="/js/map.js"></script>
+	{% endblock %}
+{% endblock %}

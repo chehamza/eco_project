@@ -1,0 +1,46 @@
+{% extends "/index.html.twig" %}
+{% block main %}
+
+<div class="signupForm">
+    <form action="/signup" method="post">
+        <div>
+            <h2>Formulaire d'inscription</h2>
+        </div>
+        <div>
+            <label for="userName">Nom<span style="color: red;">*</span></label>
+            <input type="text" name="name" id="userName" value="">
+            {% if error %}
+                <p class="error-message">{{error.errors.name}}</p>
+            {% endif %}
+        </div>
+        <div>
+            <label for="userMail">Email<span style="color: red;">*</span></label>
+            <input type="email" name="email" id="userMail" value="">
+            {% if error %}
+                <p class="error-message">{{error.email}}</p>             
+            {% endif %}
+        </div>
+        <div>
+            <label for="userPassword">Mot de passe<span style="color: red;">*</span></label>
+            <input type="password" name="password" id="userPassword" value="">
+            {% if error %}
+                <p class="error-message">{{error.errors.password}}</p>
+            {% endif %}
+        </div>
+        <div>
+            <label for="confirmPassword">Confirmer le mot de passe<span style="color: red;">*</span></label>
+            <input type="password" name="confirmPassword" id="confirmPassword" value="">
+            {% if error %}
+                <p class="error-message">{{error.confirmPassword}}</p>
+            {% endif %}
+        </div>
+        <div>
+            <input id="submitBtn" type="submit" value="S'inscrire"/>
+        </div>
+         <div class="loginLink">
+                <p> Vous avez déjà un compte? <a href="/login">Connexion</a> </p> 
+            </div>
+    </form>
+</div>
+
+{% endblock %}
