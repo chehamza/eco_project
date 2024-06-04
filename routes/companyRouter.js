@@ -6,18 +6,18 @@ const authGuard = require("../services/authGuard");
 const evaluationModel = require("../models/evaluationModel");
 companyRouter.post('/addCompany', async (req, res) => {
     try {
+
         let newCompany = new companyModel(req.body);
         newCompany.validateSync();
         await newCompany.save();
         await userModel.updateOne({ _id: req.session.user._id }, { company: newCompany });
         res.redirect("/dashboard");
     } catch (error) {
-        console.log(error);
+     
         req.session.errors = error.errors;
         res.redirect("/dashboard");
     }
 });
-
 companyRouter.get('/annuaire', authGuard(false), async (req, res) => {
     try {
         let query = {};
@@ -33,7 +33,7 @@ companyRouter.get('/annuaire', authGuard(false), async (req, res) => {
         const companies = await companyModel.find(query).populate('products materialsNeeded wasteMaterials evaluations');
         const isAdmin = req.session.user.isAdmin;
         const showHeader = isAdmin ? true : false;
-        res.render('annuaire/annuaireView.twig', { companies,showHeader });
+        res.render('annuaire/annuaireView.twig', { companies,showHeader,isAnnuairePage: true });
     } catch (error) {
         console.error(error);
         res.send('Erreur interne du serveur');
@@ -58,7 +58,7 @@ companyRouter.post('/addReview/:companyId', authGuard(false), async (req, res) =
     try {  
         const review = new evaluationModel(req.body);
         review.evaluatedCompany = req.params.companyId
-        review.evaluatorCompany = req.session.user._id
+        review.evaluatorCompany = req.session.user._id    
         review.validateSync();
         console.log(review);
         await review.save();
@@ -71,7 +71,9 @@ companyRouter.post('/addReview/:companyId', authGuard(false), async (req, res) =
             }
         ); res.redirect('/annuaire')
     } catch (error) {
-        res.send({ error: error.message })
+        res.render('annuaire/annuaireView.twig',{
+            error: error,
+        })
     }
 })
 
@@ -90,6 +92,7 @@ companyRouter.post('/updateCompany/:id', authGuard(false), async (req, res) => {
     try {
         await companyModel.updateOne({ _id: req.params.id }, req.body);
         req.session.messages = "L'entreprise a bien été modifié";
+       
     } catch (error) {
         req.session.errors = error.errors;
     }
@@ -115,9 +118,7 @@ companyRouter.get('/deleteCompany/:id', authGuard(false), async (req, res) => {
             }         
             await companyModel.deleteOne({ _id: req.params.id });
             await userModel.deleteOne({ _id: req.session.user._id });
-            req.session.messages = "Cette entreprise a bien été supprimée";
-         
-            showNotification("Cette entreprise a bien été supprimée ");
+            req.session.messages = "Cette entreprise a bien été supprimée";     
             
             return res.redirect("/dashboard");
         }

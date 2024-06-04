@@ -6,7 +6,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="css/style.css" rel="stylesheet">
 		<link href="css/homeForm.css" rel="stylesheet">
-		<link href="css/header.css" rel="stylesheet">		
+		<link href="css/header.css" rel="stylesheet">
+		
 		<title>Gestionnaire des déchets</title>
 		{% block style %}{% endblock %}
 	</head>
@@ -15,6 +16,9 @@
         {% include "./layouts/header.html.twig" %}
         {% endblock header %}
 		{% block main %}{% endblock %}
+		{% block footer %}
+			{% include "./layouts/footer.html.twig" %}
+		{% endblock %}
 		<script src="/js/script.js"></script>
 		{% block script %}{% endblock %}
 	</body>

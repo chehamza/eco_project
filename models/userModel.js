@@ -3,15 +3,27 @@ const bcrypt = require('bcrypt');
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true, "Le nom est requis"],
-    },
+        required: [true, "Indiquez le nom de votre entreprise."]   
+     },
     email: {
         type: String,
         required: [true, "Le mail est requis"],
+        validate: {
+            validator: function (v) {
+                return /^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/
+                .test(v)
+            },
+            message: "Entrez un mail valide"
+        }
     },
     password: {
         type: String,
-        required: [true, "Le mot de passe est requis"],
+        required: [true, "Le mot de passe est requis"],   
+        validate: {
+            validator: function (v) {
+                return /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-/]).{8,}$/.test(v)
+            }, message: "Entrez un mot de passe valide :<br>  8 caractère minimum, une majuscule,<br> une minuscule et un caractère spécial"
+        }
        
     },
     isAdmin : {

@@ -1,10 +1,10 @@
 {% extends "/index.html.twig" %}
 {% block main %}
 	{% if user.role == true %}	
-		<h1>Bievenue sur Eco-connect application</h1>
+		<h1>Bievenue sur eco-connect application</h1>
 	{% else %}
 		<main id="dashboard-ctn">
-			<h1>Bievenue sur Eco-connect application</h1>
+			<h1 class="dashboard-title">Bievenue sur eco-connect application</h1>
 			
 			{% include "../companyView/companyView.twig" %}
 			 <div id="materialModal"   class = "materialsModal">

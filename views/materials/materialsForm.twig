@@ -5,7 +5,7 @@
         <h2>Ajouter un nouveau matériau</h2>
         <form id="materialForm"  {% if material %} action="/updateMaterial/{{ material.id }}" {% else %} action="/addMaterial" {% endif %} method="POST">
             <div id="nameContainer">
-                <label for="name">Nom du matériau</label>
+                <label for="name">Nom</label>
                 <input type="text" name="name" id="name" {% if material %} value="{{ material.name }}" {% endif %} placeholder="Nom du matériau" >
                 <p class="error-message">{{ errors.name.message }}</p>
             </div>

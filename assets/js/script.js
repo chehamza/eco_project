@@ -44,14 +44,15 @@ const openMaterialModal = async (status,materialId = null)=>{
     }
 }
 let closeButton = document.querySelector('.remove');
-
 closeButton?.addEventListener('click', function() {
-
     document.querySelector("#materialModal").classList.remove('open');
 });
-
-
-
+/****notification**/
+const notification = document.querySelector('.notification');
+setTimeout(() => {
+    notification.classList.add('hidden'); 
+  }, 2000);
+  
 
 /****Rview modal js*/
 let openModalBtn = document.querySelector('#openModalBtn');
@@ -89,6 +90,7 @@ function highlightStars(rating) {
         }
     });
 }
+
 
 
 

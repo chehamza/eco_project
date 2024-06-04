@@ -1,4 +1,9 @@
 {% block main %}
+	{% if session.messages %}
+		<div class="notification">
+			{{ session.messages }}
+		</div>
+	{% endif %}
 	<!DOCTYPE html>
 	<html lang="fr">
 		<head>
@@ -6,92 +11,109 @@
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<title>Détails de l'entreprise</title>
 			<link rel="stylesheet" href="styles.css">
-			<body>
-				<div class="container">
-					<h1>Détails de l'entreprise</h1>
-					{% if company %}
-						<div class="card">
-							<h2 class="card-title">
-								<strong>Nom de l'entreprise :</strong>
-								{{ company.name }}</h2>
-							<div class="card-content">
-								<p>
-									<strong>Secteur d'activité:</strong>
-									{{ company.activity}}
-								</p>
-								<p>
-									<strong>Produits:</strong>
-									<ul>
-										{% for material in company.products %}
-											<li>
-												<p>Nom :{{material.name}}
-													<button class="editBtn" onclick="openMaterialModal('product','{{material.id}}')">
-														<i class="fas fa-edit"></i>
-													</button>
-												</p>
+		</head>
+		<body>
+			<div class="container">
+				<h1>Détails de l'entreprise</h1>
+				{% if company %}
+					<div class="card">
+						<h3 class="card-title">
+							{{ company.name }}
+						</h3>
+						<div class="card-content">
+							<p class="activity-title">
+								<strong>Secteur d'activité:</strong>
+								{{ company.activity }}
+							</p>
+							<div class="materialsCtn">
+								<div class="materialsDetails">
+									<div class="products">
+										<strong>Produits</strong>
+										<ul class="products-list">
 
-											</li>
-										{% endfor %}
-										<button class="addBtn" onclick="openMaterialModal('product')">
-											<i class="fas fa-plus"></i>
-										</button>
+											{% for material in company.products %}
+												<li>
+													<p>
+														{{ material.name }}
+														<br>
+														<a class="editBtn" onclick="openMaterialModal('product','{{ material.id }}')">
+															<i class="fas fa-pen"></i>
+														</a>
+														<a href="/deleteMaterial/products/{{ material.id }}">
+															<i class="fas fa-trash"></i>
 
-									</ul>
-									<strong>Besoins:</strong>
-									<ul>
-										{% for material in company.materialsNeeded %}
-											<li>
-												<p>Nom de produits recherché:
-													{{material.name}}
-													<button class="editBtn" onclick="openMaterialModal('needed','{{material.id}}')">
-														<i class="fas fa-edit"></i>
-													</button>
-
-												</p>
-											</li>
-										{% endfor %}
-										<button class="addBtn" onclick="openMaterialModal('needed')">
-											<i class="fas fa-plus"></i>
-										</button>
-									</ul>
-									<strong>Déchets:</strong>
-									<ul>
-										{% for material in company.wasteMaterials %}
-											<li>
-												<p>Nom:
-													{{ material.name }}
-													<button class="editBtn" onclick="openMaterialModal('wasted', '{{ material.id }}')">
-														<i class="fas fa-edit"></i>
-													</button>
-													<button>
-														<a href="/deleteMaterial/{{ material.id }}">Supprimer</a>
-													</button>
-												</p>
-											</li>
-										{% endfor %}
-										<button class="addBtn" onclick="openMaterialModal('wasted')">
-											<i class="fas fa-plus"></i>
-										</button>
-									</ul>
-								</p>
+														</a>
+													</p>
+												</li>
+											{% endfor %}
+											<button class="addBtn" onclick="openMaterialModal('product')">
+												<i class="fas fa-plus"></i>
+											</button>
+										</ul>
+									</div>
+									<div class="needs">
+										<strong>Besoins</strong>
+										<ul class="needs-list">
+											{% for material in company.materialsNeeded %}
+												<li>
+													<p>
+														{{ material.name }}
+														<br>
+														<a class="editBtn" onclick="openMaterialModal('needed','{{ material.id }}')">
+															<i class="fas fa-pen"></i>
+														</a>
+														<a href="/deleteMaterial/needed/{{ material.id }}">
+															<i class="fas fa-trash"></i>
+														</a>
+													</p>
+												</li>
+											{% endfor %}
+											<button class="addBtn" onclick="openMaterialModal('needed')">
+												<i class="fas fa-plus"></i>
+											</button>
+										</ul>
+									</div>
+									<div class="wastes">
+										<strong>Déchets</strong>
+										<ul class="waste-list">
+											{% for material in company.wasteMaterials %}
+												<li>
+													<p>
+														{{ material.name }}
+														<br>
+														<a class="editBtn" onclick="openMaterialModal('wasted','{{ material.id }}')">
+															<i class="fas fa-pen"></i>
+														</a>
+														<a  href="/deleteMaterial/waste/{{ material.id }}">
+															<i class="fas fa-trash"></i>
+														</a>
+													</p>
+												</li>
+											{% endfor %}
+											<button class="addBtn" onclick="openMaterialModal('wasted')">
+												<i class="fas fa-plus"></i>
+											</button>
+										</ul>
+									</div>
+								</div>
 							</div>
 						</div>
-						<div class="company-links">
-							<button>
-								<a href="/updateCompany/{{ company.id }}">Modifier</a>
-							</button>
-							<button>
-								<a href="/deleteCompany/{{ company.id }}">Supprimer</a>
-							</button>
-							<button>
-								<a href="/companyDetails/{{ company.id }}">Voire détails</a>
-							</button>
-						</div>
-					{% else %}
-						<p>Aucune information disponible pour cette entreprise.</p>
-					{% endif %}
-				</div>
-			</body>
-		</head>
+					</div>
+					<div class="company-links">
+						<button>
+							<a href="/updateCompany/{{ company.id }}">Modifier</a>
+						</button>
+						<button>
+							<a href="/deleteCompany/{{ company.id }}">Supprimer</a>
+						</button>
+						<button>
+							<a href="/companyDetails/{{ company.id }}">Voire détails</a>
+						</button>
+					</div>
+				{% else %}
+					<p class="info-company">Aucune information disponible pour cette entreprise.</p>
+				{% endif %}
+			</div>
+		</body>
 	</html>
 {% endblock %}

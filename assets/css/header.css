@@ -1,10 +1,11 @@
 header {
-  background-color: #f0f0f0;
+  background: rgb(9, 36, 0);
+  background: linear-gradient(90deg, rgba(9, 36, 0, 1) 0%, rgba(89, 164, 21, 1) 100%, rgba(0, 212, 255, 1) 100%);
   padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #logo {
@@ -21,27 +22,135 @@ nav ul {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
 }
 
 nav ul li {
-  display: inline;
   margin-left: 20px;
-}
-
-nav ul li:first-child {
-  margin-left: 0;
 }
 
 nav ul li a {
   text-decoration: none;
-  color: #333;
-  transition: color 0.3s ease; 
+  color: whitesmoke;
+  transition: 0.2s ease-in-out;
 }
-#Annuaire-btn{
-  background-color: rgb(66, 124, 66);
-  padding: 10px 15px;
-  border-radius: 5px;
-}
+
 nav ul li a:hover {
   color: #a28787;
 }
+
+.btn-connexion {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 4px 6px 6px 6px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.btn-connexion:hover {
+  background-color: rgba(255, 255, 255, 0.293);
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.burger div {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 5px;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  nav ul {
+      display: none;
+      flex-direction: column;
+      background: rgb(9, 36, 0);
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      padding: 10px 0;
+  }
+
+  nav ul.show {
+      display: flex;
+  }
+
+  nav ul li {
+      margin-left: 0;
+      margin-bottom: 10px;
+      text-align: center;
+  }
+
+  .burger {
+      display: flex;
+  }
+}
+
+/***footer**/
+.footerReseau {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 80px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-icon {
+  text-align: center;
+}
+
+.footer-icon img {
+  width: 40px;
+  transition: transform 0.3s ease;
+  border-radius: 5px;
+}
+
+.footer-icon img:hover {
+  transform: scale(1.1);
+}
+
+.copyright {
+  font-size: 14px;
+  text-align: center;
+}
+
+
+@media (max-width: 768px) {
+  .footerReseau {
+    gap: 10px; 
+  }
+
+  .footer-icon img {
+    width: 35px; 
+  }
+
+  .copyright {
+    font-size: 12px; 
+  }
+}
+
+@media (max-width: 480px) {
+  .footerReseau {
+    gap: 5px;
+  }
+
+  .footer-icon img {
+    width: 30px; 
+  }
+
+  .copyright {
+    font-size: 10px; 
+  }
+}
+
+

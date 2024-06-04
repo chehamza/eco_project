@@ -1,78 +1,108 @@
 {% extends "/index.html.twig" %}
-
+{% set showHeader = true %}
 {% block main %}
-    <h1>Détails des entreprises inscrites</h1>
-    <div id="searchBar">
-        <form action="/annuaire" method="GET">
-            <input type="text" name="keyword" value="" placeholder="Search">
-            <select name="searchType">
-                <option value="activity">Secteur d'Actvité</option>
-                <option value="materialsNeeded">Besoins</option>
-                <option value="wasteMaterials">Déchets</option>
-            </select>
-            <button type="submit">Search</button>
-        </form>
-    </div>
+	<div class="annCtn">
+		<h1>Trouver votre entreprises</h1>
+	</div>
+	<div id="searchBar">
+		<form action="/annuaire" method="GET">
+			<input type="text" name="keyword" value="" placeholder="Search">
+			<select name="searchType">
+				<option value="activity">Secteur d'Activité</option>
+				<option value="materialsNeeded">Besoins</option>
+				<option value="wasteMaterials">Déchets</option>
+			</select>
+			<button type="submit">Search</button>
+		</form>
+	</div>
 
-    {% for company in companies %}
-        <div class="mainCard">
-            <h2 class="cardTitle">
-                <strong>Nom de l'entreprise :</strong>
-                {{ company.name }}
-            </h2>
-            <div class="cardContent">
-                <p>
-                    <strong>Secteur d'activité:</strong>
-                    {{ company.activity }}
-                </p>
-                <p>
-                    <strong>Produits:</strong>
-                    <ul>
-                        {% for material in company.products %}
-                            <li>Nom : {{ material.name }}</li>
-                        {% endfor %}
-                    </ul>
-                </p>
-                <p>
-                    <strong>Besoins:</strong>
-                    <ul>
-                        {% for material in company.materialsNeeded %}
-                            <li>Nom de produits recherché: {{ material.name }}</li>
-                        {% endfor %}
-                    </ul>
-                </p>
-                <p>
-                    <strong>Déchets:</strong>
-                    <ul>
-                        {% for material in company.wasteMaterials %}
-                            <li>Nom: {{ material.name }}</li>
-                        {% endfor %}
-                    </ul>
-                </p>
-            </div>
-            <div class="company-links">
-                <button>
-                    <a href="/companyDetails/{{ company.id }}">Voir détails</a>
-                </button>
-                <a href="/signup">
-                    <i id="email-icon" class="fas fa-envelope" style="color: gold;"></i>
-                </a>
-            </div>
-            <p>
-                <div class="star-rating" id="starRating">
-                    <span class="star {% if company.average >= 5 %}active {% endif %}" data-value="5">&#9733;</span>
-                    <span class="star {% if company.average >= 4 %}active {% endif %}" data-value="4">&#9733;</span>
-                    <span class="star {% if company.average >= 3 %}active {% endif %}" data-value="3">&#9733;</span>
-                    <span class="star {% if company.average >= 2 %}active {% endif %}" data-value="2">&#9733;</span>
-                    <span class="star {% if company.average >= 1 %}active {% endif %}" data-value="1">&#9733;</span>
-                </div>
-            </p>
-            <p>Évaluation: {{ company.average }}/5 <br>basée sur : {{ company.evaluations|length }} avis</p>
-            <div id="map{{loop.index0}}" data-address="{{company.address}}" class="map"></div>
-        </div>
-    {% endfor %}
+	<div class="annuaire-container">
+		{% for company in companies %}
+			{% if company %}
+				<div class="mainCard">
+					<h2 class="ann-card-title">
+						<strong>Nom de l'entreprise :</strong><br>
+						{{ company.name }}
+					</h2>
+					<div class="cardContent">
+						<p>
+							<strong>Secteur d'activité:</strong>
+							{{ company.activity }}
+						</p>
 
-    {% if companies is empty %}
-        <p>Aucune information disponible pour cette entreprise.</p>
-    {% endif %}
-{% endblock %}
+						<strong>Produits:</strong>
+						<ul class="inline-list">
+							{% for material in company.products %}
+								<li>{{ material.name }}</li>
+							{% endfor %}
+						</ul>
+
+						<br>
+						<strong>Besoins:</strong>
+						<ul class="inline-list">
+							{% for material in company.materialsNeeded %}
+								<li>{{ material.name }}</li>
+							{% endfor %}
+						</ul>
+
+						<br>
+						<strong>Déchets:</strong>
+						<a href="/signup">
+							<img id="email-icon" src="/images/email-icon.png" alt="Email">
+						</a>
+						<ul class="inline-list">
+							{% for material in company.wasteMaterials %}
+								<li>{{ material.name }}</li>
+							{% endfor %}
+						</ul>
+
+					</div>
+					<div class="company-links">
+						<div class="button-container">
+							<button>
+								<a href="/signup">Voir détails</a>
+							</button>
+							{% if session.user.isAdmin == true %}
+								<button>
+									<a href="/deleteCompany/{{ company.id }}">supprimer</a>
+								</button>
+							{% endif %}
+
+						</div>
+					</div>
+					<p>
+						<div class="star-rating" id="starRating">
+							<span class="star {% if company.average >= 5 %}active {% endif %}" data-value="5">&#9733;</span>
+							<span class="star {% if company.average >= 4 %}active {% endif %}" data-value="4">&#9733;</span>
+							<span class="star {% if company.average >= 3 %}active {% endif %}" data-value="3">&#9733;</span>
+							<span class="star {% if company.average >= 2 %}active {% endif %}" data-value="2">&#9733;</span>
+							<span class="star {% if company.average >= 1 %}active {% endif %}" data-value="1">&#9733;</span>
+						</div>
+					</p>
+					<div class="company-notes">
+						<div class="company-rating">
+							<p>Évaluation:
+								{{ company.average }}/5</p>
+						</div>
+						<div class="company-reviews">
+							{% set numberOfEvaluations = company.evaluations|length %}
+							<p>{{ numberOfEvaluations }}
+								avis</p>
+						</div>
+					</div>
+					<div class="map-ctn">
+						<div class="map-wrapper"></div>
+						<div id="map{{loop.index0}}" data-address="{{company.address}}" class="map"></div>
+					</div>
+				</div>
+			{% else %}
+				<p>Aucune information disponible</p>
+			{% endif %}
+
+		{% endfor %}
+	</div>
+
+</div>
+{% block script %}
+	<script src="/js/map.js"></script>
+{% endblock %}{% endblock %}

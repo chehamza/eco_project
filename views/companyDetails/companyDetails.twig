@@ -1,4 +1,4 @@
-{% extends "/index.html.twig" %}
+{% extends "index.html.twig" %}
 {% block main %}
 	<!DOCTYPE html>
 	<html lang="fr">
@@ -9,126 +9,142 @@
 			<link rel="stylesheet" href="styles.css">
 		</head>
 		<body>
+
 			<div class="detailCtn">
-				<h1>Détails de l'entreprise</h1>
-				{% if company %}
-					<div class="cardContent">
-						<h2 class="cardTitle">
-							<strong>Nom de l'entreprise :</strong>
-							{{ company.name }}
-						</h2>
-						<div class="data-content">
-							<div class="compInfo">
-								<p>
-									<strong>SIRET:</strong>
-									{{ company.siret }}
-								</p>
-								<p>
-									<strong>Email:</strong>
-									{{ company.email }}
-								</p>
-								<p>
-									<strong>Adresse:</strong>
-									{{ company.address }}
-								</p>
-								<p>
-									<strong>Ville:</strong>
-									{{ company.city }}
-								</p>
-								<p>
-									<strong>Activité:</strong>
-									{{ company.activity }}
-								</p>
-							</div>
-							<div class="compProducts">
-								<p>
-									<strong>Produits:</strong>
-									<ul>
-										{% for material in company.products %}
-											<li>{{ material.name }}</li>
-										{% endfor %}
-									</ul>
-								</p>
-								<p>
-									<strong>Besoins:</strong>
-									<ul>
-										{% for material in company.materialsNeeded %}
-											<li>
-												<p>Nom de produit recherché:
-													{{ material.name }}</p>
-												<p>Quantité:
-													{{ material.quantity }}
-													(kg)</p>
-												<p>Description:
-													{{ material.description }}</p>
-											</li>
-										{% endfor %}
-									</ul>
-								</p>
-								<p>
-									<strong>Déchets:</strong>
-									<ul>
-										{% for material in company.wasteMaterials %}
-											<li>
-												<p>Nom:
-													{{ material.name }}</p>
-												<p>Quantité:
-													{{ material.quantity }}
-													(kg)</p>
-												<p>Prix:
-													{{ material.price }}
-													€</p>
-												<p>Description:
-													{{ material.description }}</p>
-											</li>
-										{% endfor %}
-									</ul>
-								</p>
+				<div class="globalCtn">
+					<h1>Détails de l'entreprise</h1>
+					{% if company %}
+						<div class="cardContent">
+							<h2 class="cardTitle">
+								<strong>Nom de l'entreprise :</strong>
+								{{ company.name }}
+							</h2>
+							<div class="data-content">
+								<div class="compInfo">
+									<p>
+										<strong>Email:</strong>
+										{{ company.email }}
+									</p>
+									<p>
+										<strong>Adresse:</strong>
+										{{ company.address }}
+									</p>
+									<p>
+										<strong>SIRET:</strong>
+										{{ company.siret }}
+									</p>
+
+
+									<p>
+										<strong>Ville:</strong>
+										{{ company.city }}
+									</p>
+								</div>
+
+								<div class="activity-ctn">
+									<p>
+										<strong>Activité:</strong>
+										{{ company.activity }}
+									</p>
+								</div>
+
+
+								<div class="compProducts">
+									<div class="products">
+
+										<strong>Produits:</strong>
+										<ul class="products-list">
+											{% for material in company.products %}
+												<li>{{ material.name }}</li>
+											{% endfor %}
+										</ul>
+
+
+									</div>
+
+									<div class="needs">
+
+										<strong>Besoins:</strong>
+										<ul class="needs-list">
+											{% for material in company.materialsNeeded %}
+												<li>
+													<p>
+														{{ material.name }}</p>
+													<p>Quantité:
+														{{ material.quantity }}
+														(kg)</p>
+													<p>Description:
+														{{ material.description }}</p>
+												</li>
+											{% endfor %}
+										</ul>
+
+									</div>
+
+									<div class="wastes">
+
+										<strong>Déchets:</strong>
+										<ul class="waste-list">
+											{% for material in company.wasteMaterials %}
+												<li>
+													<p>
+														{{ material.name }}</p>
+													<p>Quantité:
+														{{ material.quantity }}
+														(kg)</p>
+													<p>Prix:
+														{{ material.price }}
+														€</p>
+													<p>Description:
+														{{ material.description }}</p>
+												</li>
+											{% endfor %}
+										</ul>
+
+									</div>
+
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="evaluations">
-						<h3>Évaluations</h3>
+						<div class="evaluations">
+							<h3>Évaluations</h3>
+							{% if company.evaluations is not empty %}
 
-
-						<ul class="other-comments">
-
-							{% for evaluation in company.evaluations %}
-
-								<li>
-									<strong>Évalué par:</strong>
-									{{ evaluation.evaluatorCompany.name }}<br>
-									<div class="star-rating" id="starRating">
-										<span class="star {% if evaluation.stars >= 5 %}active {% endif %}" data-value="5">&#9733;</span>
-										<span class="star {% if evaluation.stars >= 4 %}active {% endif %}" data-value="4">&#9733;</span>
-										<span class="star {% if evaluation.stars >= 3 %}active {% endif %}" data-value="3">&#9733;</span>
-										<span class="star {% if evaluation.stars >= 2 %}active {% endif %}" data-value="2">&#9733;</span>
-										<span class="star {% if evaluation.stars >= 1 %}active {% endif %}" data-value="1">&#9733;</span>
-									</div>
-									<strong>Commentaire:</strong>
-									{{ evaluation.comment }}<br>
-
-									<strong>Date:</strong>
-									{{ evaluation.date|date('d/m/Y') }}<br>
-
-									{% if session.user.isAdmin == true %}
-										<button id="note-delete">
-											<a href="/deleteEvaluation/{{ company.id }}/{{ evaluation.id }}">
-												<i class="fas fa-trash"></i>
-											</a>
-										</button>
-
-									{% endif %}
-
-								</li>
-							{% endfor %}
-						</ul>
-					</div>
-
-				{% else %}
-					<p>Aucune information disponible pour cette entreprise.</p>
-				{% endif %}
+								<ul class="other-comments">
+									{% for evaluation in company.evaluations %}
+										<li>
+											<strong>Évalué par:</strong>
+											{{ evaluation.evaluatorCompany.name }}<br>
+											<div class="star-rating" id="starRating">
+												<span class="star {% if evaluation.stars >= 5 %}active {% endif %}" data-value="5">&#9733;</span>
+												<span class="star {% if evaluation.stars >= 4 %}active {% endif %}" data-value="4">&#9733;</span>
+												<span class="star {% if evaluation.stars >= 3 %}active {% endif %}" data-value="3">&#9733;</span>
+												<span class="star {% if evaluation.stars >= 2 %}active {% endif %}" data-value="2">&#9733;</span>
+												<span class="star {% if evaluation.stars >= 1 %}active {% endif %}" data-value="1">&#9733;</span>
+											</div>
+											<strong>Commentaire:</strong>
+											{{ evaluation.comment }}<br>
+											<strong>Date:</strong>
+											{{ evaluation.date|date('d/m/Y') }}<br>
+											{% if session.user.isAdmin %}
+												<button id="note-delete">
+													<a href="/deleteEvaluation/{{ company.id }}/{{ evaluation.id }}">
+														<img id="delete_icon" src="/images/delete_icone.png" alt="Supprimer" width="15" height="20">
+													</a>
+												</button>
+											{% endif %}
+										</li>
+									{% endfor %}
+								</ul>
+							{% else %}
+								<p class="empty-ev">Pas d'évaluations pour cette entreprise</p>
+							{% endif %}
+						</div>
+					{% else %}
+						<p>Aucune information disponible pour cette entreprise.</p>
+					{% endif %}
+				</div>
 			</div>
 		</body>
 	</html>
-{% endblock %}</body></html>
+</body></html>{% endblock %}

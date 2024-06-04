@@ -16,7 +16,8 @@ materialsRouter.post('/addMaterial', async (req, res) => {
             await companyModel.updateOne({_id : user.company}, {$push : {materialsNeeded : newMaterials._id}})
         }else{
             await companyModel.updateOne({_id : user.company}, {$push : {products : newMaterials._id}})
-        }     
+        } 
+        req.session.messages = "Le matériau a bien été ajouté";    
         res.redirect("/dashboard");
     } catch (error) {
         console.log(error);
@@ -59,18 +60,28 @@ materialsRouter.post('/updateMaterial/:id', async (req, res) => {
 })
 
 
-materialsRouter.get('/deleteMaterial/:id', async (req, res) => {
+materialsRouter.get('/deleteMaterial/:type/:id', async (req, res) => {
     try {
-        await materialsModel.deleteOne({ _id: req.params.id });
-        await companyModel.updateOne({_id: req.session.user.company}, {$pull: {wasteMaterials: req.params.id}})
+        const type = req.params.type;
+        const materialId = req.params.id;
         
-        req.session.messages = "Cet matérieau à bien été supprimé";
+        await materialsModel.deleteOne({ _id: materialId });
+            
+        let updateField = '';
+        if (type == 'waste') {
+            updateField = 'wasteMaterials';
+        } else if (type == 'needed') {
+            updateField = 'materialsNeeded';
+        } else if (type == 'product') {
+            updateField = 'products';
+        }
+        await companyModel.updateOne({ _id: req.session.user.company }, { $pull: { [updateField]: materialId } });
+        
+        req.session.messages = "Le matériau a bien été supprimé";
     } catch (error) {
         req.session.errors = error.errors;
     }
     res.redirect("/dashboard");
 });
-
-
 
 module.exports = materialsRouter;

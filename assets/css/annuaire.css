@@ -5,21 +5,32 @@
     margin: 0;
     padding: 0;
 }
-
-h1 {
-    color: #333;
+.annuaire-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap :15px;
+    width: 100%;
+}
+.annCtn h1 {
+    color: #80a044;
     text-align: center;
     margin-top: 20px;
 }
-
+.ann-card-title{
+    margin-top: 0;
+}
 .annCtn {
     text-align: center;
     margin-bottom: 20px;
 }
 
 .map {
-    height: 300px;
+    height: 200px;
+    border-radius: 5px;
+    width: 100%;
+
 }
+
 
 .mainCard {
     background-color: #fff;
@@ -30,12 +41,43 @@ h1 {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 300px;
 }
+.map-ctn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    width: 100%;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    position: relative;
+    }
+    .map-wrapper{
+       position: absolute;
+       width: 100%;
+       height: 100%;
+       top: 0;
+       left: 0;
+       backdrop-filter: blur(10px);
+       -webkit-backdrop-filter: blur(10px);
+       z-index: 2000;
+    }
+    
 
-.cardTitle {
-    color: #007bff;
-    font-size: 20px;
-    margin-bottom: 10px;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .cardContent p {
     margin: 0 0 10px;
@@ -50,9 +92,33 @@ h1 {
     margin-bottom: 5px;
 }
 
-.company-links {
-    text-align: center;
+
+.button-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
 }
+.company-notes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.company-rating {
+    font-weight: bold;
+}
+
+.company-reviews {
+    text-align: right;
+}
+
+.button-container button {
+    display: inline-block; 
+    margin-right: 10px; 
+    font-size: 12px; 
+    font-weight: bold;
+    padding: 6px 12px;}
 
 .company-links button {
     background-color: #28a745;
@@ -71,4 +137,95 @@ h1 {
 
 .company-links button:hover {
     background-color: #218838;
+}
+#email-icon {
+    width: 40px;
+    height: 40px;
+    color: gold;
+    transition: transform 0.3s ease;
+    float: right; 
+    margin-left: 10px; 
+}
+
+#email-icon:hover {
+    transform: scale(1.1);
+    color: goldenrod;
+}
+
+.evaluated-company{
+    margin: 0;
+    border-radius: 5px;
+    padding:10px;
+    font-size: 12px; 
+    font-weight: bold;
+    background-color:#FFC536;
+}
+.inline-list {
+    display: inline; 
+    list-style: none; 
+    padding: 0; 
+    margin-bottom: 5px;
+}
+
+.inline-list li {
+    display: inline; 
+    margin-right: 10px; 
+}
+
+.cardContent p > strong {
+    margin-right: 10px; 
+}
+
+
+/* search-bar */
+#searchBar {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+#searchBar form {
+    display: flex;
+    align-items: center;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+#searchBar input[type="text"] {
+    flex: 1; 
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    width: 100%; 
+    max-width: 400px; 
+}
+
+#searchBar select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+#searchBar button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#searchBar button:hover {
+    background-color: #0056b3;
+}
+
+
+
+@media screen and (max-width: 600px) {
+    #searchBar input[type="text"] {
+        max-width: none; 
+    }
 }

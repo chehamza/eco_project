@@ -1,18 +1,32 @@
 {% if showHeader %}
-    <header>
-        <div>
-            <a href="/"><img src="images/logo.png" id="logo" alt="logo"></a>
-        </div>
-        <li>
-            {% if session.user %}
-                {% if session.user.isAdmin %}
-                    <a href="/logout" id="logout-btn">Logout</a>
-                {% else %}
-                    <a href="/addCompany" id="addCompany-btn">Créer mon espace</a>
-                    <a href="/annuaire" id="Annuaire-btn">Annuaire</a>
-                    <a href="/logout" id="logout-btn">Logout</a>
-                {% endif %}
-            {% endif %}
-        </li>
-    </header>
+	<header>
+		<div>
+			{% if isAnnuairePage %}
+				<a href="/dashboard"><img src="/images/dashHouse.png" id="dashHouse" alt="logo" style="width: 30px; height: auto;"></a>
+			{% else %}
+				<a ><img src="/images/log.png" id="logo" alt="logo"></a>
+			{% endif %}
+		</div>
+		<li>
+			{% if session.user %}
+				{% if session.user.isAdmin %}
+					<a href="/logout" id="logout-btn">Logout
+						<i class="fas fa-sign-out-alt"></i>
+					</a>
+				{% else %}
+					{% if session.user.company %}
+						<a href="/updateCompany/{{ session.user.company._id }}" id="addCompany-btn">Modifier mon espace</a>
+					{% else %}
+						<a href="/addCompany" id="addCompany-btn">Créer mon espace</a>
+					{% endif %}
+					{% if not isAnnuairePage %}
+						<a href="/annuaire" id="Annuaire-btn">Annuaire</a>
+					{% endif %}
+					<a href="/logout" id="logout-btn">Logout
+						<i class="fas fa-sign-out-alt"></i>
+					</a>
+				{% endif %}
+			{% endif %}
+		</li>
+	</header>
 {% endif %}

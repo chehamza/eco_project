@@ -70,7 +70,7 @@ userRouter.get('/companyDetails/:id', async (req, res) => {
             { path: 'wasteMaterials' },
             { path: 'evaluations', populate: "evaluatorCompany" }
         ]);
-        console.log(company);
+      
         res.render('companyDetails/companyDetails.twig', {
             company: company
         });
