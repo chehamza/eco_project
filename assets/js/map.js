@@ -22,6 +22,22 @@ maps.forEach((map,index)=>{
     });
 })
 
+let popupDetails = document.querySelector('#popup-details');
+		let shutButton = popupDetails.querySelector('.close');
+		function openPopup() {
+			popupDetails.style.display = 'block';
+		}
+		function closePopup() {
+			popupDetails.style.display = 'none';
+		}
 
+		if (popupDetails && shutButton) {
+			let detailsButtons = document.querySelectorAll('.details-button');
+			
+			detailsButtons.forEach(button => {
+				button.addEventListener('click', openPopup);
+			});
 
+			shutButton.addEventListener('click', closePopup);
+		}
 

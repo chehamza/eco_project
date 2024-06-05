@@ -13,7 +13,7 @@ companyRouter.post('/addCompany', async (req, res) => {
         await userModel.updateOne({ _id: req.session.user._id }, { company: newCompany });
         res.redirect("/dashboard");
     } catch (error) {
-     
+
         req.session.errors = error.errors;
         res.redirect("/dashboard");
     }
@@ -23,17 +23,17 @@ companyRouter.get('/annuaire', authGuard(false), async (req, res) => {
         let query = {};
         if (req.query.searchType && req.query.keyword) {
             if (req.query.searchType != 'activity') {
-                let name = {$regex: new RegExp(req.query.keyword,'i')}
+                let name = { $regex: new RegExp(req.query.keyword, 'i') }
                 const materials = await materialsModel.find({ name: name }).distinct('_id');
                 query[req.query.searchType] = { $in: materials };
-            }else{
-                query.activity = {$regex: new RegExp(req.query.keyword,'i')}
+            } else {
+                query.activity = { $regex: new RegExp(req.query.keyword, 'i') }
             }
         }
         const companies = await companyModel.find(query).populate('products materialsNeeded wasteMaterials evaluations');
         const isAdmin = req.session.user.isAdmin;
         const showHeader = isAdmin ? true : false;
-        res.render('annuaire/annuaireView.twig', { companies,showHeader,isAnnuairePage: true });
+        res.render('annuaire/annuaireView.twig', { companies, showHeader, isAnnuairePage: true });
     } catch (error) {
         console.error(error);
         res.send('Erreur interne du serveur');
@@ -42,7 +42,17 @@ companyRouter.get('/annuaire', authGuard(false), async (req, res) => {
 
 companyRouter.get('/home-annuaire', async (req, res) => {
     try {
-        const companies = await companyModel.find()
+        let query = {};
+        if (req.query.searchType && req.query.keyword) {
+            if (req.query.searchType != 'activity') {
+                let name = { $regex: new RegExp(req.query.keyword, 'i') }
+                const materials = await materialsModel.find({ name: name }).distinct('_id');
+                query[req.query.searchType] = { $in: materials };
+            } else {
+                query.activity = { $regex: new RegExp(req.query.keyword, 'i') }
+            }
+        }
+        const companies = await companyModel.find(query)
             .populate('products materialsNeeded wasteMaterials evaluations')
             .exec();
         res.render('homeAnnuaire/homeAnnuaire.twig', { companies: companies });
@@ -55,10 +65,10 @@ companyRouter.get('/home-annuaire', async (req, res) => {
 
 
 companyRouter.post('/addReview/:companyId', authGuard(false), async (req, res) => {
-    try {  
+    try {
         const review = new evaluationModel(req.body);
         review.evaluatedCompany = req.params.companyId
-        review.evaluatorCompany = req.session.user._id    
+        review.evaluatorCompany = req.session.user._id
         review.validateSync();
         console.log(review);
         await review.save();
@@ -67,11 +77,11 @@ companyRouter.post('/addReview/:companyId', authGuard(false), async (req, res) =
         await userModel.updateOne(
             { _id: req.session.user._id },
             {
-                $push: { evaluatedCompanies: req.params.companyId},
+                $push: { evaluatedCompanies: req.params.companyId },
             }
         ); res.redirect('/annuaire')
     } catch (error) {
-        res.render('annuaire/annuaireView.twig',{
+        res.render('annuaire/annuaireView.twig', {
             error: error,
         })
     }
@@ -92,7 +102,7 @@ companyRouter.post('/updateCompany/:id', authGuard(false), async (req, res) => {
     try {
         await companyModel.updateOne({ _id: req.params.id }, req.body);
         req.session.messages = "L'entreprise a bien été modifié";
-       
+
     } catch (error) {
         req.session.errors = error.errors;
     }
@@ -103,23 +113,23 @@ companyRouter.post('/updateCompany/:id', authGuard(false), async (req, res) => {
 
 companyRouter.get('/deleteCompany/:id', authGuard(false), async (req, res) => {
     try {
-        
+
         if (req.session.user.isAdmin) {
-            
+
             await companyModel.deleteOne({ _id: req.params.id });
             await userModel.deleteOne({ company: req.params.id });
-            req.session.messages = "Cette entreprise a bien été supprimée";         
+            req.session.messages = "Cette entreprise a bien été supprimée";
             return res.redirect("/annuaire");
         } else {
-            
-            const company = await companyModel.findOne({ _id: req.params.id, _id: req.session.user.company});
+
+            const company = await companyModel.findOne({ _id: req.params.id, _id: req.session.user.company });
             if (!company) {
                 throw new Error("not authorized");
-            }         
+            }
             await companyModel.deleteOne({ _id: req.params.id });
             await userModel.deleteOne({ _id: req.session.user._id });
-            req.session.messages = "Cette entreprise a bien été supprimée";     
-            
+            req.session.messages = "Cette entreprise a bien été supprimée";
+
             return res.redirect("/dashboard");
         }
     } catch (error) {

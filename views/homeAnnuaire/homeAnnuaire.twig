@@ -5,7 +5,7 @@
 		<h1>Trouver votre entreprises</h1>
 	</div>
 	<div id="searchBar">
-		<form action="/annuaire" method="GET">
+		<form action="/home-annuaire" method="GET">
 			<input type="text" name="keyword" value="" placeholder="Search">
 			<select name="searchType">
 				<option value="activity">Secteur d'Activité</option>
@@ -17,8 +17,12 @@
 	</div>
 
 	<div class="annuaire-container">
-		{% for company in companies %}
-			{% if company %}
+		{% if companies is empty %}
+			<div class="no-results-message">
+				<p>Aucun résultat correspondant à votre recherche</p>
+			</div>
+		{% else %}
+			{% for company in companies %}
 				<div class="mainCard">
 					<h2 class="ann-card-title">
 						<strong>Nom de l'entreprise :</strong><br>
@@ -47,7 +51,7 @@
 
 						<br>
 						<strong>Déchets:</strong>
-						<a href="/signup">
+						<a class="details-button">
 							<img id="email-icon" src="/images/email-icon.png" alt="Email">
 						</a>
 						<ul class="inline-list">
@@ -55,19 +59,17 @@
 								<li>{{ material.name }}</li>
 							{% endfor %}
 						</ul>
-
 					</div>
 					<div class="company-links">
-						<div class="button-container">
-							<button>
-								<a href="/signup">Voir détails</a>
+						<div>
+							<button class="details-button">
+								<a>Voir détails</a>
 							</button>
 							{% if session.user.isAdmin == true %}
 								<button>
 									<a href="/deleteCompany/{{ company.id }}">supprimer</a>
 								</button>
 							{% endif %}
-
 						</div>
 					</div>
 					<p>
@@ -92,17 +94,24 @@
 					</div>
 					<div class="map-ctn">
 						<div class="map-wrapper"></div>
-						<div id="map{{loop.index0}}" data-address="{{company.address}}" class="map"></div>
+						<div id="map{{loop.index0}}" data-address="{{ company.address }}" class="map"></div>
 					</div>
 				</div>
-			{% else %}
-				<p>Aucune information disponible</p>
-			{% endif %}
-
-		{% endfor %}
+			{% endfor %}
+		{% endif %}
 	</div>
-
 </div>
+
+ <div id="popup-details" class="popup">
+        <span class="close">&times;</span>
+        <p>Rejoignez-nous pour accéder aux détails de l'entreprise <br> et la contacter</p>
+        <a class="popup-register" href="/signup">S'inscrire</a>
+    </div>
+
+
+
 {% block script %}
 	<script src="/js/map.js"></script>
-{% endblock %}{% endblock %}
+	<script src="/js/script.js"></script>
+{% endblock %}
+{% endblock %}
