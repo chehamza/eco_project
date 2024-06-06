@@ -24,11 +24,16 @@ maps.forEach((map,index)=>{
 
 let popupDetails = document.querySelector('#popup-details');
 		let shutButton = popupDetails.querySelector('.close');
+
 		function openPopup() {
 			popupDetails.style.display = 'block';
+            document.body.classList.add('blur');
+
 		}
 		function closePopup() {
 			popupDetails.style.display = 'none';
+            document.body.classList.remove('blur');
+
 		}
 
 		if (popupDetails && shutButton) {
