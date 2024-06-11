@@ -55,7 +55,7 @@ companyRouter.get('/home-annuaire', async (req, res) => {
         const companies = await companyModel.find(query)
             .populate('products materialsNeeded wasteMaterials evaluations')
             .exec();
-        res.render('homeAnnuaire/homeAnnuaire.twig', { companies: companies });
+        res.render('homeAnnuaire/homeAnnuaire.twig', { companies: companies,isHomeAnnuairePage: true });
     } catch (error) {
         console.error(error);
         res.send('Erreur interne du serveur');

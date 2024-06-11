@@ -3,6 +3,9 @@
 		<div>
 			{% if isAnnuairePage %}
 				<a href="/dashboard"><img src="/images/dashHouse.png" id="dashHouse" alt="logo" style="width: 30px; height: auto;"></a>
+			
+			{% elseif isHomeAnnuairePage %}
+				<a href="/"><img src="/images/dashHouse.png" id="dashHouse" alt="logo" style="width: 30px; height: auto;"></a>
 			{% else %}
 				<a ><img src="/images/log.png" id="logo" alt="logo"></a>
 			{% endif %}

@@ -8,7 +8,6 @@ const evaluationRouter = require("./routes/evaluationRouter");
 require('dotenv').config();
 
 
-
 const app = express();
 
 app.use(express.static("assets"));
@@ -23,6 +22,11 @@ app.use(function (req, res, next) {
     res.locals.session = req.session
     next()
 })
+app.use((req, res, next) => {
+    res.locals.messages = req.session.messages;
+    delete req.session.messages;
+    next();
+});
 app.use(userRouter);
 app.use(companyRouter);
 app.use(materialsRouter);

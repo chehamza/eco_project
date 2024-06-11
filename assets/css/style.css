@@ -353,12 +353,15 @@ li a:hover {
 }
 .fas.fa-trash:hover {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-    transform: scale(1.1);
+    transform: scale(1.2);
     transition: transform 0.2s;
 }
 #dashHouse:hover{
     transform: scale(1.1);
     transition: transform 0.2s; 
+}
+.fas.fa-trash{
+    font-size: 15px;
 }
 #map {
     height: 500px;
@@ -583,6 +586,10 @@ li a:hover {
     color: green;
     font-size: 0.9em;
     margin-top: 5px;
+}
+
+.annuaire-star .star {
+    pointer-events: none;  
 }
 
 .star-rating {
@@ -832,6 +839,7 @@ h2 {
     width: 250px;
     z-index: 999;
     font-family: 'Roboto', sans-serif;
+
 }
 
 .notification.hidden {

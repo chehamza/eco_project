@@ -103,6 +103,8 @@
 .popup-register {
 color:whitesmoke;
 text-align: center;
+transition: color 0.3s ease;
+
 }
 .popup-register:hover{
     color:grey;

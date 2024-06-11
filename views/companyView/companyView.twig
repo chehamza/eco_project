@@ -1,9 +1,9 @@
 {% block main %}
-	{% if session.messages %}
-		<div class="notification">
-			{{ session.messages }}
-		</div>
-	{% endif %}
+	{% if messages %}
+    <div class="notification">
+        {{ messages }}
+    </div>
+{% endif %}
 	<!DOCTYPE html>
 	<html lang="fr">
 		<head>
