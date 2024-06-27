@@ -44,7 +44,7 @@ materialsRouter.get('/material/:id', async (req, res) => {
         const material = await materialsModel.findById(materialId);
         res.json(material);
     } catch (error) {
-        console.log(error);
+        
         res.send("Une erreur s'est produite lors du chargement du formulaire de mise à jour de matériau.");
     }
 });

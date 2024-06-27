@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require('express-session');
+const cors = require("cors");
 const userRouter = require("./routes/userRouter")
 const companyRouter = require("./routes/companyRouter");
 const materialsRouter = require("./routes/materialsRouter");
@@ -9,6 +10,7 @@ require('dotenv').config();
 
 
 const app = express();
+app.use(cors());
 
 app.use(express.static("assets"));
 app.use(session({

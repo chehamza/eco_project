@@ -18,35 +18,40 @@
 	</div>
 
 	<div class="annuaire-container">
-		{% for company in companies %}
-			{% if company %}
-				<div class="mainCard">
-					<h2 class="ann-card-title">
-						<strong>Nom de l'entreprise :</strong><br>
-						{{ company.name }}
-					</h2>
-					<div class="cardContent">
-						<p>
-							<strong>Secteur d'activité:</strong>
-							{{ company.activity }}
-						</p>
-						
+		{% if companies is empty %}
+			<div class="no-results-message">
+				<p>Aucun résultat ne correspond à votre recherche</p>
+			</div>
+		{% else %}
+			{% for company in companies %}
+				{% if company %}
+					<div class="mainCard">
+						<h2 class="ann-card-title">
+							<strong>Nom de l'entreprise :</strong><br>
+							{{ company.name }}
+						</h2>
+						<div class="cardContent">
+							<p>
+								<strong>Secteur d'activité:</strong>
+								{{ company.activity }}
+							</p>
+
 							<strong>Produits:</strong>
 							<ul class="inline-list">
 								{% for material in company.products %}
 									<li>{{ material.name }}</li>
 								{% endfor %}
 							</ul>
-						
-						<br>
+
+							<br>
 							<strong>Besoins:</strong>
 							<ul class="inline-list">
 								{% for material in company.materialsNeeded %}
 									<li>{{ material.name }}</li>
 								{% endfor %}
 							</ul>
-					
-						 <br>
+
+							<br>
 							<strong>Déchets:</strong>
 							<a href="mailto:{{ company.email }}">
 								<img id="email-icon" src="/images/email-icon.png" alt="Email">
@@ -56,27 +61,28 @@
 									<li>{{ material.name }}</li>
 								{% endfor %}
 							</ul>
-						
-					</div>
-					<div class="company-links">
-						<div class="button-container">
-							<button>
-								<a href="/companyDetails/{{ company.id }}">Voir détails</a>
-							</button>
-							{% if session.user.isAdmin == true %}
+
+						</div>
+						<div class="company-links">
+							<div class="button-container">
 								<button>
-									<a href="/deleteCompany/{{ company.id }}">supprimer</a>
+									<a href="/companyDetails/{{ company.id }}">Voir détails</a>
 								</button>
-							{% endif %}
-							{% if session.user.isAdmin == false %}
-								{% if company.id in session.user.evaluatedCompanies %}
-									<p class="evaluated-company">
-										Entreprise évaluée</p>
-								{% else %}
-									{% if company.id != session.user.company %}
-										<button>
-											<a id="openModalBtn" onclick='openReviewModal("{{ company.id }}")'>Ajouter un avis</a>
-										</button>
+								{% if session.user.isAdmin == true %}
+									<button>
+										<a href="/deleteCompany/{{ company.id }}">supprimer</a>
+									</button>
+								{% endif %}
+								{% if session.user.isAdmin == false %}
+									{% if company.id in session.user.evaluatedCompanies %}
+										<p class="evaluated-company">
+											Entreprise évaluée</p>
+									{% else %}
+										{% if company.id != session.user.company %}
+											<button>
+												<a id="openModalBtn" onclick='openReviewModal("{{ company.id }}")'>Ajouter un avis</a>
+											</button>
+										{% endif %}
 									{% endif %}
 								{% endif %}
 							{% endif %}
@@ -140,7 +146,7 @@
 				{% endif %}
 				<br>
 				<label for="experienceDate">Date d'expérience :</label>
-				<input type="date" name="date" id="experienceDate" required title="Veuillez sélectionner une date">
+				<input type="date" name="date" id="experienceDate" required title="Veuillez sélectionner une date"  max="{{ "now"|date("Y-m-d") }}">
 				<br>
 				{% if error %}
 					<p class="error-message">{{ error.errors.date.message }}</p>

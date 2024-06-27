@@ -84,7 +84,7 @@ userRouter.post('/signup', async (req,res) => {
     try {
         const existingMail = await userModel.findOne({ email: req.body.email });
         if (existingMail) {
-            throw { email: "This email already exists" };
+            throw { email: "This email already exists"};
         }
         if (req.body.password != req.body.confirmPassword) {
             throw { confirmPassword: "Passwords don't match" };
@@ -93,7 +93,6 @@ userRouter.post('/signup', async (req,res) => {
         await user.save();
         res.redirect("/login");
     } catch (error) {
-        console.log(error);
         res.render("signup/_formsignup.twig", {
             error: error,
         });

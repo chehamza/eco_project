@@ -8,7 +8,7 @@ maps.forEach((map,index)=>{
             // Initialisation de la carte avec les coordonnées obtenues
             let mapper = L.map('map'+index).setView(latlng, 13);
     
-            // Ajout d'une couche de tuiles (par exemple, OpenStreetMap)
+            // Ajout d'une couche de tuiles OpenStreetMap:
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(mapper);

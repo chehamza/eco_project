@@ -17,6 +17,10 @@
             <div id="qtyContainer">
                 <label for="quantity">Quantité</label>
                 <input type="number" name="quantity" id="quantity" {% if material %} value="{{ material.quantity }}" {% endif %} placeholder="Quantité du matériau" >
+                <select name="unit" id="unit">
+                    <option value="unit" {% if material and material.unit == 'unit' %} selected {% endif %}>Unités</option>
+                    <option value="kg" {% if material and material.unit == 'kg' %} selected {% endif %}>Kg</option>
+                </select>
                 <p class="error-message">{{ errors.quantity.message }}</p>
             </div>
             <div id="priceContainer">

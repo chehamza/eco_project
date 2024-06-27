@@ -82,7 +82,7 @@ stars.forEach((star, index) => {
 
 function highlightStars(rating) {
     stars.forEach((star, index) => {
-        console.log(rating, index);
+        
         if (star.getAttribute('data-value') == rating) {
             star.classList.add("active");
         } else {

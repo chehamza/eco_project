@@ -23,12 +23,7 @@ const evaluationSchema = new mongoose.Schema({
   date: {
     type: Date,
     required: [true, "date est requis"],
-    validate: {
-      validator: function(value) {
-        return value < new Date(); 
-      },
-      message: "La date d'expérience n'est pas valide"
-    }
+    
   }
   
 });
