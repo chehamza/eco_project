@@ -1,5 +1,11 @@
 {% extends "/base.html.twig" %}
 {% block main %}
-{% include "home/welcome.html.twig" %}
-{% include "home/contactForm.twig" %}
+	{% include "home/welcome.html.twig" %}
+	{% include "home/contactForm.twig" %}
+
+	{% if session.emailMessage %}
+		<div class="notification">
+			{{ session.emailMessage }}
+		</div>
+	{% endif %}
 {% endblock %}
