@@ -127,9 +127,9 @@
     .home { 
         justify-content: center;
         align-items: start;
-        background-size: 320%; /* Cette propriété va s'assurer que l'image couvre tout le conteneur */
+        background-size: 320%; 
         background-repeat: no-repeat;
-        background-position: left 50% top; /* Déplacer l'image vers la gauche de 10% et l'aligner en haut */
+        background-position: left 50% top; 
     }
 
     .home-box {
@@ -270,7 +270,6 @@ textarea {
     }
    
 }
-
 
 .infos{
     height: 30vh;

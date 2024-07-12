@@ -72,7 +72,7 @@ const companySchema = new mongoose.Schema({
 });
 
 companySchema.pre('save', function(next) {
-    // Calcul de la moyenne des évaluations
+    
     const evaluations = this.evaluations;
     if (evaluations.length > 0) {
         const totalRating = evaluations.reduce((acc, curr) => acc + curr.rating, 0);

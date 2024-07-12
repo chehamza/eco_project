@@ -332,7 +332,7 @@ li a:hover {
 
 .evaluations h3 {
     text-align: center;
-    color: rgba(245, 245, 245, 0.853);
+    color:white;
 }
 
 .editBtn {
@@ -384,9 +384,9 @@ li a:hover {
 /* Style pour le tooltip */
 .addBtn:hover::after {
     content: "Ajouter matériau";
-    /* Utilise le contenu de l'attribut title */
+    
     position: fixed;
-    /* Position fixe pour que le tooltip suive le curseur */
+   
     background-color: #000;
     color: #fff;
     padding: 5px 10px;
@@ -394,13 +394,13 @@ li a:hover {
     font-size: 14px;
     white-space: nowrap;
     z-index: 9999;
-    /* Assure que le tooltip s'affiche au-dessus de tout le reste */
+   
     top: calc(var(--y, 0) - 30px);
-    /* Positionne le tooltip au-dessus du curseur */
+   
     left: calc(var(--x, 0) - 50%);
-    /* Centre le tooltip par rapport au curseur */
+   
     transform: translateX(10%);
-    /* Centre le tooltip horizontalement */
+    
     transition: opacity 0.3s ease;
 
 }
@@ -785,6 +785,7 @@ body {
 .activity-ctn {
     text-align: center;
     color: white;
+    font-size: 18px;
 }
 
 h2 {

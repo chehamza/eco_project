@@ -6,7 +6,6 @@ const authGuard = require("../services/authGuard");
 const evaluationModel = require("../models/evaluationModel");
 companyRouter.post('/addCompany', async (req, res) => {
     try {
-
         let newCompany = new companyModel(req.body);
         newCompany.validateSync();
         await newCompany.save();
@@ -69,8 +68,7 @@ companyRouter.post('/addReview/:companyId', authGuard(false), async (req, res) =
         const review = new evaluationModel(req.body);
         review.evaluatedCompany = req.params.companyId
         review.evaluatorCompany = req.session.user._id
-        review.validateSync();
-        console.log(review);
+        review.validateSync();      
         await review.save();
         await companyModel.updateOne({ _id: req.params.companyId }, { $push: { evaluations: review._id }, average: (this.average ? this.average : 5 + parseInt(req.body.stars)) / 2 })
         let company = await companyModel.findById(req.session.user.company).populate({ path: 'evaluations' });
@@ -79,7 +77,9 @@ companyRouter.post('/addReview/:companyId', authGuard(false), async (req, res) =
             {
                 $push: { evaluatedCompanies: req.params.companyId },
             }
-        ); res.redirect('/annuaire')
+        );
+         req.session.messages = 'Merci de votre notation';
+         res.redirect('/annuaire')
     } catch (error) {
         res.render('annuaire/annuaireView.twig', {
             error: error,

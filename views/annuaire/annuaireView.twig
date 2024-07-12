@@ -2,6 +2,11 @@
 {% set showHeader = true %}
 
 {% block main %}
+	{% if messages %}
+    <div class="notification">
+        {{ messages }}
+    </div>
+    {% endif %}
 	<div class="annCtn">
 		<h1>Trouver votre entreprises</h1>
 	</div>
@@ -133,29 +138,23 @@
 				</div>
 				<input type="hidden" name="stars" id="stars" value="0">
 				<br>
-				{% if error %}
-					<p class="error-message">{{ error.errors.stars }}</p>
-				{% endif %}
 
 				<div id="map{{loop.index0}}" data-address="{{company.address}}" class="map"></div>
 
 				<label for="comment">Laisser un avis :</label>
 				<textarea name="comment" id="comment" cols="30" rows="5" placeholder="Décrivez votre expérience" required></textarea>
-				{% if error %}
-					<p class="error-message">{{ error.errors.comment }}</p>
-				{% endif %}
+
 				<br>
 				<label for="experienceDate">Date d'expérience :</label>
-				<input type="date" name="date" id="experienceDate" required title="Veuillez sélectionner une date"  max="{{ "now"|date("Y-m-d") }}">
+				<input type="date" name="date" id="experienceDate" required title="Veuillez sélectionner une date" max="{{ "now"|date("Y-m-d") }}">
 				<br>
-				{% if error %}
-					<p class="error-message">{{ error.errors.date.message }}</p>
-				{% endif %}
+
 
 				<button type="submit">Ajouter</button>
 			</form>
 		</div>
 	</div>
+
 	{% block script %}
 		<script src="/js/map.js"></script>
 	{% endblock %}

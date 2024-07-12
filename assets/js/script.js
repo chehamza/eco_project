@@ -3,6 +3,7 @@ const openMaterialModal = async (status,materialId = null)=>{
     if(materialId){
         const response = await fetch('/material/'+materialId);
         material = await response.json()
+        
         document.querySelector('#materialForm').action = "/updateMaterial/"+materialId
         document.querySelector('#nameContainer input').value = material.name
         document.querySelector('#priceContainer input').value = material.price
@@ -12,6 +13,7 @@ const openMaterialModal = async (status,materialId = null)=>{
     }else{
         document.querySelector('#materialForm').action = "/addMaterial"
     }
+    
     let option = document.querySelector("#option");
     if(!option){
         option = document.createElement("input")
@@ -47,14 +49,12 @@ let closeButton = document.querySelector('.remove');
 closeButton?.addEventListener('click', function() {
     document.querySelector("#materialModal").classList.remove('open');
 });
-/****notification**/
 const notification = document.querySelector('.notification');
 setTimeout(() => {
     notification.classList.add('hidden'); 
   }, 2000);
   
 
-/****Rview modal js*/
 let openModalBtn = document.querySelector('#openModalBtn');
 let modal = document.querySelector('#ReviewModal');
 let closeModalBtn = modal.querySelector('.close');
@@ -69,7 +69,6 @@ function closeModal() {
 closeModalBtn?.addEventListener('click', closeModal);
 
 
-/****Stars Rating js*****/
 const stars = document.querySelectorAll(".star-rating .star");
 const starsInput = document.getElementById("stars");
 stars.forEach((star, index) => {
@@ -79,10 +78,8 @@ stars.forEach((star, index) => {
         highlightStars(rating);
     });
 });
-
 function highlightStars(rating) {
-    stars.forEach((star, index) => {
-        
+    stars.forEach((star, index) => {     
         if (star.getAttribute('data-value') == rating) {
             star.classList.add("active");
         } else {

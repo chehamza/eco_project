@@ -5,16 +5,19 @@ maps.forEach((map,index)=>{
         if (results && results.length > 0) {
             const latlng = L.latLng(results[0].center.lat, results[0].center.lng);
     
-            // Initialisation de la carte avec les coordonnées obtenues
             let mapper = L.map('map'+index).setView(latlng, 13);
     
-            // Ajout d'une couche de tuiles OpenStreetMap:
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(mapper);
     
-            // Ajout d'un marqueur à l'adresse
-            L.marker(latlng).addTo(mapper);
+            let marker = L.marker(latlng).addTo(mapper);
+            marker.bindPopup(map.getAttribute('data-address'));
+
+           
+            marker.on('click', function () {
+                marker.openPopup();
+            });
         } else {
             console.error("Adresse non trouvée !");
         }
@@ -46,3 +49,4 @@ let popupDetails = document.querySelector('#popup-details');
 			shutButton.addEventListener('click', closePopup);
 		}
 
+        
